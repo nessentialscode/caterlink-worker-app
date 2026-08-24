@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-ink-100 text-ink-800 font-sans;
+    overscroll-behavior-y: none;
+  }
+  button {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+  input, select, textarea {
+    font-family: inherit;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .shimmer-bg {
+    position: relative;
+    overflow: hidden;
+    background: #f2f4f7;
+  }
+  .shimmer-bg::after {
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+    content: '';
+  }
+  .form-input {
+    width: 100%;
+    height: 3.25rem;
+    padding: 0 1rem;
+    border: 1px solid #e4e7ec;
+    border-radius: 1rem;
+    background: white;
+    font-size: 0.9375rem;
+    color: #172033;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input:focus {
+    border-color: #155EEF;
+    box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.12);
+  }
+  .form-input::placeholder {
+    color: #98A2B3;
+  }
+}
