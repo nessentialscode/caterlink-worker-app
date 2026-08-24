@@ -7,6 +7,7 @@ export type ScreenName =
   | 'dashboard'
   | 'jobs'
   | 'jobDetails'
+  | 'applicationForm'
   | 'applications'
   | 'applicationDetails'
   | 'profile'
@@ -66,6 +67,17 @@ export interface Application {
   status: ApplicationStatus;
   appliedAt: string;
   timeline: { status: ApplicationStatus; label: string; date: string; done: boolean }[];
+  role?: string;
+  experience?: string;
+  skills?: string[];
+  message?: string;
+}
+
+export interface ApplicationFormData {
+  role: string;
+  experience: string;
+  skills: string[];
+  message: string;
 }
 
 export interface WorkerProfile {

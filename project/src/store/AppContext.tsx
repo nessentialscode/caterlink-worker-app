@@ -10,6 +10,7 @@ import type {
   TabName,
   Job,
   Application,
+  ApplicationFormData,
   WorkerProfile,
   NotificationItem,
   ApplicationStatus,
@@ -46,7 +47,7 @@ interface AppState {
   selectJob: (jobId: string) => void;
   selectApplication: (appId: string) => void;
   toggleSaveJob: (jobId: string) => void;
-  applyToJob: (jobId: string) => void;
+  applyToJob: (jobId: string, formData: ApplicationFormData) => string;
   updateProfile: (patch: Partial<WorkerProfile>) => void;
   markNotificationRead: (id: string) => void;
   markAllNotificationsRead: () => void;
@@ -136,22 +137,30 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  const applyToJob = useCallback((jobId: string) => {
+  const applyToJob = useCallback((jobId: string, formData: ApplicationFormData) => {
     const existing = applications.find((a) => a.jobId === jobId);
-    if (existing) return;
+    if (existing) return existing.id;
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
     const newApp: Application = {
       id: `app-${Date.now()}`,
       jobId,
-      status: 'under_review',
-      appliedAt: '17 Aug 2026',
+      status: 'applied',
+      appliedAt: dateStr,
+      role: formData.role,
+      experience: formData.experience,
+      skills: formData.skills,
+      message: formData.message,
       timeline: [
-        { status: 'applied', label: 'Applied', date: '17 Aug 2026, now', done: true },
-        { status: 'under_review', label: 'Under Review', date: '17 Aug 2026, now', done: true },
+        { status: 'applied', label: 'Applied', date: `${dateStr}, ${timeStr}`, done: true },
+        { status: 'under_review', label: 'Under Review', date: 'Pending', done: false },
         { status: 'accepted', label: 'Accepted', date: 'Pending', done: false },
         { status: 'completed', label: 'Work Completed', date: 'Pending', done: false },
       ],
     };
     setApplications((prev) => [newApp, ...prev]);
+    return newApp.id;
   }, [applications]);
 
   const updateProfile = useCallback((patch: Partial<WorkerProfile>) => {

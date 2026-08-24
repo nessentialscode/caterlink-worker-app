@@ -177,6 +177,10 @@ export const mockApplications: Application[] = [
     jobId: 'job-1',
     status: 'accepted',
     appliedAt: '15 Aug 2026',
+    role: 'Serving',
+    experience: '3+ years in wedding and banquet catering',
+    skills: ['Serving', 'Event Setup', 'General Catering'],
+    message: 'Experienced with large wedding events and banquet service.',
     timeline: [
       { status: 'applied', label: 'Applied', date: '15 Aug 2026, 2:30 PM', done: true },
       { status: 'under_review', label: 'Under Review', date: '15 Aug 2026, 4:10 PM', done: true },
@@ -189,6 +193,10 @@ export const mockApplications: Application[] = [
     jobId: 'job-3',
     status: 'under_review',
     appliedAt: '14 Aug 2026',
+    role: 'Food Preparation',
+    experience: '2 years in hotel banquet kitchen',
+    skills: ['Food Preparation', 'Event Setup', 'Serving'],
+    message: 'Available for the full shift. Familiar with buffet setup.',
     timeline: [
       { status: 'applied', label: 'Applied', date: '14 Aug 2026, 11:00 AM', done: true },
       { status: 'under_review', label: 'Under Review', date: '14 Aug 2026, 1:45 PM', done: true },
@@ -201,6 +209,10 @@ export const mockApplications: Application[] = [
     jobId: 'job-2',
     status: 'applied',
     appliedAt: '16 Aug 2026',
+    role: 'Waiter',
+    experience: '1-3 years as event waiter',
+    skills: ['Serving', 'Waiter', 'Cleaning'],
+    message: 'I have worked at several reception events in the area.',
     timeline: [
       { status: 'applied', label: 'Applied', date: '16 Aug 2026, 10:20 AM', done: true },
       { status: 'under_review', label: 'Under Review', date: 'Pending', done: false },
@@ -209,21 +221,14 @@ export const mockApplications: Application[] = [
     ],
   },
   {
-    id: 'app-4',
-    jobId: 'job-5',
-    status: 'rejected',
-    appliedAt: '12 Aug 2026',
-    timeline: [
-      { status: 'applied', label: 'Applied', date: '12 Aug 2026, 3:00 PM', done: true },
-      { status: 'under_review', label: 'Under Review', date: '12 Aug 2026, 5:30 PM', done: true },
-      { status: 'rejected', label: 'Rejected', date: '13 Aug 2026, 8:00 AM', done: true },
-    ],
-  },
-  {
     id: 'app-5',
     jobId: 'job-4',
     status: 'completed',
     appliedAt: '5 Aug 2026',
+    role: 'Serving',
+    experience: '3+ years in community event catering',
+    skills: ['Serving', 'Dishwashing', 'General Catering', 'Cleaning'],
+    message: 'Happy to help with community festival service.',
     timeline: [
       { status: 'applied', label: 'Applied', date: '5 Aug 2026, 9:00 AM', done: true },
       { status: 'under_review', label: 'Under Review', date: '5 Aug 2026, 11:00 AM', done: true },

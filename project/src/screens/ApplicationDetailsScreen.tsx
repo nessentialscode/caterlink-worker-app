@@ -1,6 +1,6 @@
 import { useApp } from '@/store/AppContext';
-import { AppHeader, StatusBadge, ProfileAvatar, RatingDisplay, Button } from '@/components/ui';
-import { MapPin, Calendar, Clock, IndianRupee, BadgeCheck, CheckCircle2, Circle } from 'lucide-react';
+import { AppHeader, StatusBadge, ProfileAvatar, RatingDisplay, SkillChip, Button } from '@/components/ui';
+import { MapPin, Calendar, Clock, IndianRupee, BadgeCheck, CircleCheck as CheckCircle2, Circle, User, Briefcase, MessageSquare } from 'lucide-react';
 
 export function ApplicationDetailsScreen() {
   const { selectedApplicationId, getApplicationById, getJobById, goBack, setTab } = useApp();
@@ -64,6 +64,47 @@ export function ApplicationDetailsScreen() {
                 <span className="text-xs text-ink-500">{job.provider.jobsPosted} jobs posted</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-card shadow-card p-4">
+          <h2 className="font-semibold text-ink-500 text-xs uppercase tracking-wide mb-3">Your Application</h2>
+          <div className="space-y-3">
+            {app.role && (
+              <div className="flex items-start gap-2.5">
+                <User size={16} className="text-ink-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-xs text-ink-500">Selected Role</p>
+                  <p className="text-sm font-semibold text-ink-800">{app.role}</p>
+                </div>
+              </div>
+            )}
+            {app.experience && (
+              <div className="flex items-start gap-2.5">
+                <Briefcase size={16} className="text-ink-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-xs text-ink-500">Relevant Experience</p>
+                  <p className="text-sm text-ink-700">{app.experience}</p>
+                </div>
+              </div>
+            )}
+            {app.skills && app.skills.length > 0 && (
+              <div>
+                <p className="text-xs text-ink-500 mb-1.5">Skills</p>
+                <div className="flex flex-wrap gap-2">
+                  {app.skills.map((s) => (<SkillChip key={s} label={s} size="sm" />))}
+                </div>
+              </div>
+            )}
+            {app.message && (
+              <div className="flex items-start gap-2.5">
+                <MessageSquare size={16} className="text-ink-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-xs text-ink-500">Message to Provider</p>
+                  <p className="text-sm text-ink-700">{app.message}</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

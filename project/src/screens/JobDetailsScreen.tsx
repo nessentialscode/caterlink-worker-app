@@ -1,23 +1,19 @@
-import { useState } from 'react';
 import { useApp } from '@/store/AppContext';
 import {
   AppHeader, Button, SkillChip, ProfileAvatar, RatingDisplay,
-  ConfirmationSheet, BottomSheet, StatusBadge,
+  StatusBadge,
 } from '@/components/ui';
 import {
   MapPin, Calendar, Clock, Users, IndianRupee, Share2, Bookmark,
-  Check, BadgeCheck, PartyPopper,
+  BadgeCheck,
 } from 'lucide-react';
 
 export function JobDetailsScreen() {
   const {
     selectedJobId, getJobById, goBack, navigate, toggleSaveJob, savedJobs,
-    applyToJob, getApplicationByJobId, pushToast, setTab, selectApplication,
+    getApplicationByJobId, pushToast, selectApplication,
   } = useApp();
   const job = selectedJobId ? getJobById(selectedJobId) : undefined;
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const [successOpen, setSuccessOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   if (!job) {
     return (
@@ -30,16 +26,6 @@ export function JobDetailsScreen() {
 
   const isSaved = savedJobs.has(job.id);
   const existingApp = getApplicationByJobId(job.id);
-
-  const handleApply = () => {
-    setConfirmOpen(false);
-    setLoading(true);
-    setTimeout(() => {
-      applyToJob(job.id);
-      setLoading(false);
-      setSuccessOpen(true);
-    }, 600);
-  };
 
   return (
     <div className="flex flex-col min-h-screen bg-ink-100">
@@ -152,50 +138,11 @@ export function JobDetailsScreen() {
             View Application
           </Button>
         ) : (
-          <Button fullWidth size="lg" onClick={() => setConfirmOpen(true)}>
+          <Button fullWidth size="lg" onClick={() => navigate('applicationForm')}>
             Apply for Job
           </Button>
         )}
       </div>
-
-      <ConfirmationSheet open={confirmOpen} onClose={() => setConfirmOpen(false)} title="Review Your Application" confirmLabel="Confirm & Apply" onConfirm={handleApply} loading={loading}>
-        <div className="space-y-2.5">
-          <SummaryRow label="Job" value={job.title} />
-          <SummaryRow label="Provider" value={job.provider.name} />
-          <SummaryRow label="Date" value={job.date} />
-          <SummaryRow label="Shift" value={job.time} />
-          <SummaryRow label="Location" value={`${job.location}, Kerala`} />
-          <SummaryRow label="Pay" value={`₹${job.pay}/day`} />
-          <div className="pt-1">
-            <p className="text-xs font-semibold text-ink-500 uppercase tracking-wide mb-2">Required Skills</p>
-            <div className="flex flex-wrap gap-2">
-              {job.skills.map((s) => (<SkillChip key={s} label={s} size="sm" />))}
-            </div>
-          </div>
-          <div className="flex items-start gap-2 pt-3 border-t border-ink-100">
-            <div className="h-7 w-7 rounded-full bg-brand-50 flex items-center justify-center shrink-0 mt-0.5">
-              <Check size={15} className="text-brand-500" />
-            </div>
-            <p className="text-sm text-ink-600">By applying, you confirm that you are available for this shift and meet the required skills.</p>
-          </div>
-        </div>
-      </ConfirmationSheet>
-
-      <BottomSheet open={successOpen} onClose={() => setSuccessOpen(false)}>
-        <div className="flex flex-col items-center text-center py-4">
-          <div className="h-20 w-20 rounded-full bg-success-50 flex items-center justify-center mb-4 animate-check-pop">
-            <PartyPopper size={36} className="text-success-600" />
-          </div>
-          <h3 className="text-xl font-bold text-ink-800 mb-1">Application sent!</h3>
-          <p className="text-sm text-ink-500 max-w-[260px] mb-6">
-            Your application has been sent to the catering provider. You'll be notified when they respond.
-          </p>
-          <div className="w-full space-y-2.5">
-            <Button fullWidth onClick={() => { setSuccessOpen(false); setTab('applications'); }}>View Application</Button>
-            <Button fullWidth variant="ghost" onClick={() => { setSuccessOpen(false); setTab('jobs'); }}>Back to Jobs</Button>
-          </div>
-        </div>
-      </BottomSheet>
     </div>
   );
 }
@@ -208,15 +155,6 @@ function DetailItem({ icon, label, value, highlight = false }: { icon: React.Rea
         <span className="text-xs">{label}</span>
       </div>
       <p className={`text-sm font-semibold ${highlight ? 'text-brand-600' : 'text-ink-800'}`}>{value}</p>
-    </div>
-  );
-}
-
-function SummaryRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex justify-between items-center">
-      <span className="text-sm text-ink-500">{label}</span>
-      <span className="text-sm font-semibold text-ink-800">{value}</span>
     </div>
   );
 }

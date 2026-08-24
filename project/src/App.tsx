@@ -8,6 +8,7 @@ import { ProfileSetupScreen } from '@/screens/ProfileSetupScreen';
 import { DashboardScreen } from '@/screens/DashboardScreen';
 import { JobsScreen } from '@/screens/JobsScreen';
 import { JobDetailsScreen } from '@/screens/JobDetailsScreen';
+import { ApplicationFormScreen } from '@/screens/ApplicationFormScreen';
 import { ApplicationsScreen } from '@/screens/ApplicationsScreen';
 import { ApplicationDetailsScreen } from '@/screens/ApplicationDetailsScreen';
 import { ProfileScreen } from '@/screens/ProfileScreen';
@@ -27,6 +28,7 @@ const TAB_SCREENS: ScreenName[] = ['dashboard', 'jobs', 'applications', 'profile
 
 const DETAIL_SCREENS: ScreenName[] = [
   'jobDetails',
+  'applicationForm',
   'applicationDetails',
   'editProfile',
   'notifications',
@@ -71,6 +73,10 @@ function ScreenRouter() {
       break;
     case 'jobDetails':
       content = <JobDetailsScreen />;
+      animClass = 'animate-slide-in-right';
+      break;
+    case 'applicationForm':
+      content = <ApplicationFormScreen />;
       animClass = 'animate-slide-in-right';
       break;
     case 'applications':
